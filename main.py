@@ -1,9 +1,11 @@
 from mouse.mouse_se import MouseSE
+import mouse.mouse_client as mse
 import wordHuntTool
 import time
 
 x_spots = (0, 0, 0, 0)
 y_spots = (0, 0, 0, 0)
+client = mse.MouseClient()
 
 
 def goto_spot(val, debug=False):
