@@ -219,6 +219,46 @@ def printOutput(validWords, mode):
         print("No more words, thanks for using my Word Hunt Tool!")
 
 
+def collect_info():
+    # initial setup
+    global MAX_LENGTH
+    print("\nNote: This code was designed for the 4x4 (default) board size.")
+    maxLen = input(
+        "\nDefault max word length is 10. Note this allocates about\n"
+        + "16MB of space for word sets. If you wish to change it, enter\n"
+        + "the desired maximum word length (3 <= L <= 10):\t"
+    ).rstrip()
+    if maxLen.isnumeric():
+        if int(maxLen) > 10 or int(maxLen) < 3:
+            print("Invalid length. Using default (10) instead.")
+        else:
+            MAX_LENGTH = int(maxLen)
+            print("New max word length is %d." % MAX_LENGTH)
+    else:
+        print("Using default max word length (10).")
+    filename = "letters10.txt"
+    # filename = input("What word list file would you like as input?\t")
+    try:
+        inputFile = open(filename, "r")
+    except:
+        print(
+            "\nCould not open the file. Please make sure %s is in the current directory, and run this file from inside the current directory.\n"
+            % filename
+        )
+        exit(0)
+    for word in inputFile:
+        strippedWord = word.rstrip()  # removes newline char
+        if len(strippedWord) > MAX_LENGTH:
+            continue
+        englishWords.add(strippedWord)
+        # add each word start to the set of word starts
+        for i in range(3, len(strippedWord) + 1):
+            wordStarts.add(strippedWord[:i])
+    inputFile.close()
+
+    board = Board([Letter(s, i) for i, s in enumerate(input("What is the board?"))])
+
+
 # main method
 def main():
     # initial setup

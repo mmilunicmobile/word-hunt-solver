@@ -31,6 +31,13 @@ class MouseSE:
         self.current_x = x
         self.current_y = y
 
+    def reset(self):
+        self.current_x = 0
+        self.current_y = 0
+        self.client.state = [0, 128, 128, 0]
+        for i in range(20):
+            self.client.send_current()
+
     def calcer(self, value):
         new_val = abs(value)
         new_val = min(100, new_val)
