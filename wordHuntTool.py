@@ -189,34 +189,14 @@ def printOutput(validWords, mode):
             # pair[1] = word
             if place > 1:
                 # if not first time through
-                next = input("\nPress enter for next word, or 'q' to quit\t")
+                next = ""
                 if next == "q":
                     break
             squares = ["____"] * 16
             letterPos = 1
             # populate the board strings
             positions = positionsList[pair[0]]
-            for pos in positions:
-                leftUnderscores = "__" if letterPos < 10 else "_"
-                squares[pos] = leftUnderscores + str(letterPos) + "_"
-                letterPos += 1
-            # print the board
-            print("_____________________")
-            index = 0
-            outStr = "|"
-            for sq in squares:
-                outStr += sq + "|"
-                if index % 4 == 3:
-                    # if on far right
-                    if index == 7:
-                        # if on second output row, print the word info
-                        print(outStr + "\t%d:   %s" % (place, pair[1]))
-                    else:
-                        print(outStr)
-                    outStr = "|"
-                index += 1
-            place += 1
-        print("No more words, thanks for using my Word Hunt Tool!")
+            yield positions
 
 
 def collect_info():
@@ -257,6 +237,11 @@ def collect_info():
     inputFile.close()
 
     board = Board([Letter(s, i) for i, s in enumerate(input("What is the board?"))])
+    printBoard(board)
+    word_cmp_key = cmp_to_key(word_compare)
+    findValidWords(board, DIAGRAM)
+    validWords = sorted(list(valids), key=word_cmp_key, reverse=True)
+    return printOutput(validWords, DIAGRAM)
 
 
 # main method
@@ -331,7 +316,7 @@ def main():
     if len(validWords) == 0:
         print("There were no valid words for the board.")
         exit(0)
-    printOutput(validWords, outputMode)
+    return printOutput(validWords, outputMode)
 
 
 if __name__ == "__main__":

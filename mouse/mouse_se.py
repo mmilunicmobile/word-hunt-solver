@@ -1,4 +1,4 @@
-import mouse_emulate as mse
+import mouse.mouse_emulate as mse
 import math
 
 

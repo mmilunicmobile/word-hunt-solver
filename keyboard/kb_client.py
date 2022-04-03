@@ -16,8 +16,7 @@ import keymap  # used to map evdev input to hid keodes
 
 
 # Define a client to listen to local key events
-class Keyboard():
-
+class Keyboard:
     def __init__(self):
         # the structure for a bt keyboard input report (size is 10 bytes)
 
@@ -25,28 +24,32 @@ class Keyboard():
             0xA1,  # this is an input report
             0x01,  # Usage report = Keyboard
             # Bit array for Modifier keys
-            [0,  # Right GUI - Windows Key
-             0,  # Right ALT
-             0,  # Right Shift
-             0,  # Right Control
-             0,  # Left GUI
-             0,  # Left ALT
-             0,  # Left Shift
-             0],  # Left Control
+            [
+                0,  # Right GUI - Windows Key
+                0,  # Right ALT
+                0,  # Right Shift
+                0,  # Right Control
+                0,  # Left GUI
+                0,  # Left ALT
+                0,  # Left Shift
+                0,
+            ],  # Left Control
             0x00,  # Vendor reserved
             0x00,  # rest is space for 6 keys
             0x00,
             0x00,
             0x00,
             0x00,
-            0x00]
+            0x00,
+        ]
 
         print("setting up DBus Client")
 
         self.bus = dbus.SystemBus()
         self.btkservice = self.bus.get_object(
-            'org.thanhle.btkbservice', '/org/thanhle/btkbservice')
-        self.iface = dbus.Interface(self.btkservice, 'org.thanhle.btkbservice')
+            "org.thanhle.btkbservice", "/org/thanhle/btkbservice"
+        )
+        self.iface = dbus.Interface(self.btkservice, "org.thanhle.btkbservice")
         print("waiting for keyboard")
         # keep trying to key a keyboard
         have_dev = False
