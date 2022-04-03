@@ -27,7 +27,6 @@ class MouseSE:
             ]
             x_dif -= self.capper(x_dif)
             y_dif -= self.capper(y_dif)
-            time.sleep(0.1)
             self.client.send_current()
 
         self.current_x = x
@@ -42,7 +41,7 @@ class MouseSE:
 
     def calcer(self, value):
         new_val = abs(value)
-        new_val = min(100, new_val)
+        new_val = min(10, new_val)
 
         if value < 0:
             new_val = 256 - new_val
@@ -57,4 +56,4 @@ class MouseSE:
         self.client.send_current()
 
     def capper(self, value):
-        return math.copysign(min(abs(value), 100), value)
+        return math.copysign(min(abs(value), 10), value)
