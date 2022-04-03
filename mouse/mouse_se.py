@@ -1,5 +1,6 @@
 import mouse.mouse_emulate as mse
 import math
+import time
 
 
 class MouseSE:
@@ -26,6 +27,7 @@ class MouseSE:
             ]
             x_dif -= self.capper(x_dif)
             y_dif -= self.capper(y_dif)
+            time.sleep(0.1)
             self.client.send_current()
 
         self.current_x = x
