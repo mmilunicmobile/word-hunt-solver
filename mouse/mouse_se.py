@@ -17,7 +17,9 @@ class MouseSE:
     def goto(self, x, y):
         x_dif = x - self.current_x
         y_dif = y - self.current_y
-
+        self.client.send_current()
+        self.client.state = [int(self.current_button), 0, 0, 0]
+        self.client.send_current()
         while x_dif != 0 or y_dif != 0:
             self.client.state = [
                 int(self.current_button),
@@ -27,6 +29,8 @@ class MouseSE:
             ]
             x_dif -= self.capper(x_dif)
             y_dif -= self.capper(y_dif)
+            self.client.send_current()
+            self.client.state = [int(self.current_button), 0, 0, 0]
             self.client.send_current()
 
         self.current_x = x
