@@ -17,7 +17,7 @@ if __name__ == "__main__":
     for i in words:
         my_mouse.press(False)
         for spot in i:
-            time.sleep(1)
+            time.sleep(0.2)
             goto_spot(spot)
             my_mouse.press(True)
         my_mouse.press(False)
