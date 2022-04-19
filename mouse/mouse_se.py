@@ -24,12 +24,21 @@ class MouseSE:
             self.client.state = [
                 int(self.current_button),
                 int(self.calcer(x_dif)),
+                0,
+                0,
+            ]
+            self.client.send_current()
+            self.client.state = [int(self.current_button), 0, 0, 0]
+            self.client.send_current()
+            self.client.state = [
+                int(self.current_button),
+                0,
                 int(self.calcer(y_dif)),
                 0,
             ]
+            self.client.send_current()
             x_dif -= self.capper(x_dif)
             y_dif -= self.capper(y_dif)
-            self.client.send_current()
             self.client.state = [int(self.current_button), 0, 0, 0]
             self.client.send_current()
 
